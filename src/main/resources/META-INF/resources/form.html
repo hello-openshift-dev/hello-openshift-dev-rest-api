@@ -3,11 +3,12 @@
 <head>
     <title>Feedback Form</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,800&family=Press+Start+2P&display=swap');
         * { box-sizing: border-box; }
         body {
             background: #f1f1f9;            
             font-family: 'Open Sans', sans-serif;
+            color: #333;
             margin: 20px;
         }
 
@@ -22,8 +23,7 @@
         a { text-decoration: none; color: inherit; }
         
         h1 {
-            font-weight: 800;
-            font-style: italic;
+            font-family: 'Press Start 2P';
         }
 
         h2 { 
@@ -35,18 +35,17 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #22bd63;
+            background-color: #de7668;
             padding: 10px;
             display: flex;
             align-items: center;
         }
         
         #form-container {
-            max-width: 400px;
             margin: 0 auto;
             background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
+            padding: 60px;
+            border-radius: 50% 20% / 10% 40%;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft box shadow */
         }
         
@@ -58,21 +57,21 @@
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
             font-size: 16px;
+        }
+        
+        button[type="submit"] {
+            background-color: #fff;
+            cursor: pointer;
+            &:hover {
+                background-color: #e64632;
+                color: #fff;
+            }
         }
 
         label {
             font-family:'Courier New', Courier, monospace;
-        }
-        
-        button[type="submit"] {
-            background-color: #22bd63;
-            color: #fff;
-            cursor: pointer;
-        }
-        
-        button[type="submit"]:hover {
-            background-color: #45a049;
         }
 
         #back-button {
@@ -87,8 +86,16 @@
             flex: 1;
         }
 
-        #header-logo {
-            max-width: 50px;
+        #redhat-logo {
+            background: #f1f1f9;
+            border-radius: 100px;
+            padding: 15px;
+            > img {
+                max-width: 35px;
+            }
+            &:hover {
+                background: #fff;
+            }
         }
         
         .thank-you {
@@ -113,7 +120,6 @@
                     // Pass the form data as JSON
                     author: data.get('name'),
                     text: data.get('feedback'),
-                    // Add more fields as needed
                 }),
             })
             .then(function (response) {
@@ -145,7 +151,7 @@
     <div id="menu-bar">
         <a href="/" id="back-button">👈</a>
         <h1 id="page-title">Hello OpenShift!</h1>
-        <img id="header-logo" src="./Logo-Red_Hat-Hat_icon-Standard-RGB.png" alt="Red Hat Icon" />
+        <a id="redhat-logo" href="https://developers.redhat.com/" target="_blank"><img src="./Logo-Red_Hat-Hat_icon-Standard-RGB.png" alt="Red Hat Icon" /></a>
     </div>
     <main>
         
@@ -157,8 +163,6 @@
                 
                 <label for="feedback">Feedback:</label>
                 <textarea id="feedback" name="feedback" rows="4" required></textarea>
-                
-                <!-- Add more form fields as needed -->
                 
                 <button type="submit">Submit</button>
             </form>

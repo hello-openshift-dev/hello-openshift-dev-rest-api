@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,800&family=Press+Start+2P&display=swap');
+        * { box-sizing: border-box; }
+        body {
+            background: #f1f1f9;            
+            font-family: 'Open Sans', sans-serif;
+            color: #333;
+            margin: 20px;
+        }
+
+        main {
+            align-items: center;
+            display: flex;
+            flex-flow: column;
+            height: 100vh;
+            justify-content: center;
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        h1 {
+            font-family: 'Press Start 2P';
+        }
+
+        h2 { 
+            font-weight: 600;
+         }
+        
+        #menu-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #de7668;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        #form-container {
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 60px;
+            border-radius: 50% 20% / 10% 40%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+        }
+        
+        textarea,
+        input[type="text"],
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+        }
+        
+        button[type="submit"] {
+            background-color: #fff;
+            cursor: pointer;
+            &:hover {
+                background-color: #e64632;
+                color: #fff;
+            }
+        }
+
+        label {
+            font-family:'Courier New', Courier, monospace;
+        }
+
+        #back-button {
+            font-size: 36px;
+            padding: 0 5px;
+        }
+
+        #page-title {
+            text-align: center;
+            color: #fff; /* White text color */
+            margin: 0;
+            flex: 1;
+        }
+
+        #redhat-logo {
+            background: #f1f1f9;
+            border-radius: 100px;
+            padding: 15px;
+            > img {
+                max-width: 35px;
+            }
+            &:hover {
+                background: #fff;
+            }
+        }
+        
+        .thank-you {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const data = new FormData(form);
+            
+            fetch('/greetings', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    // Pass the form data as JSON
+                    author: data.get('name'),
+                    text: data.get('feedback'),
+                }),
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    // Handle success response
+                    displayThankYou();
+                } else {
+                    // Handle error response
+                    console.log('Error submitting form');
+                }
+            })
+            .catch(function (error) {
+                // Handle fetch error
+                console.log('An error occurred while submitting the form:', error);
+            });
+        }
+        
+        function displayThankYou() {
+            const formContainer = document.getElementById('form-container');
+            const thankYouMessage = document.createElement('p');
+            thankYouMessage.className = 'thank-you';
+            thankYouMessage.textContent = 'Thank you for your feedback!';
+            formContainer.innerHTML = '';
+            formContainer.appendChild(thankYouMessage);
+        }
+    </script>
+</head>
+<body>
+    <div id="menu-bar">
+        <a href="/" id="back-button">👈</a>
+        <h1 id="page-title">Hello OpenShift!</h1>
+        <a id="redhat-logo" href="https://developers.redhat.com/" target="_blank"><img src="./Logo-Red_Hat-Hat_icon-Standard-RGB.png" alt="Red Hat Icon" /></a>
+    </div>
+    <main>
+        
+        <div id="form-container">
+            <h2>Feedback Form</h1>
+            <form onsubmit="handleSubmit(event)">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" rows="4" required></textarea>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

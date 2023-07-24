@@ -17,7 +17,7 @@ public class MyReactiveMessagingApplication {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyReactiveMessagingApplication.class);
 
     @Incoming("greetings-in")
-    public void greetingsSink(Greeting greeting) {
+    public void greetingsSink(GreetingDTO greeting) {
         LOGGER.debug("Greeting incoming: {}", greeting);
     }
 }
